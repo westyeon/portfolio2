@@ -16,14 +16,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void login(HttpServletRequest request) {
 		// 파라미터 읽기
-		String id = request.getParameter("id");
+		String email = request.getParameter("email");
 		String pw = request.getParameter("pw");
+		String nickname = request.getParameter("nickname");
 		
 		
 		//DAO의 매개변수 만들기
 				Member member = new Member();
-				member.setId(id);
+				member.setEmail(email);
 				member.setPw(pw);
+				member.setNickname(nickname);
 				
 				//DAO의 메소드를 호출
 				Member result = memberDao.login(member);

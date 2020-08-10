@@ -3,8 +3,33 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ddmstore">
 
+
+<!-- 동적 -->
+
+	<sql id ="search">
+	<!-- searchtype이 null이거나 글자가 없다면 where절 없음 -->
+		<if test="searchtype == null"></if>
+		<if test="searchtype ==''.toString()"></if>
+		<if test="searchtype == 'store_name'.toString()">
+			where lower(store_name) like '%' || #(keyword) || '%'
+		</if>
+		<if test="searchtype == 'store_number'.toString()">
+			where lower(store_number) like '%' || #(keyword) || '%'
+		</if>
+		
+	</sql>
+	
+	<!-- 데이터 개수 찾아오기  Map에서 searchtype을 확인해서 일치하는 sql을 추가 -->
+	<select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(*)
+		from ddmstore
+		<include refid="search"></include>
+	</select>
+	
+	
 <!-- 출력할 데이터 번호를 받아서 ddmstore 테이블에서  store_number의 내림차순 정렬을 수행할 데이터 가져오기
 	부등호 크다는 >= : &gt 작다는 <=:&lt로 적어야함 -->
+<!-- 	
 <select id="list" parameterType="java.util.Map" resultType="naver.seoyeon5702.portfolio2.domain.Ddmstore">
 	select store_number, store_name, store_item, store_category,phonenumber,store_layer,dong_mark
 	from (select rownum rnum, store_number,store_name,store_item,store_category,phonenumber,store_layer,dong_mark
@@ -12,12 +37,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	where rnum &gt;= #{start} and rnum &lt;= #{end}
 
 </select>
+-->
 
+ 
 <!-- 상세 보기를 위한 메소 -->
+<!-- 
 <select id="detail" parameterType="java.lang.String" resultType="naver.seoyeon5702.portfolio2.domain.Ddmstore">
 	select store_number, store_name, store_item, store_category,phonenumber,store_layer,dong_mark
 	from ddmstore
 	where store_number =#{store_number}
 </select>
+-->
 
 </mapper>

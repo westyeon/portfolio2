@@ -24,7 +24,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
-		<!-- 웹 애플리케이션이 실행되자 마자 생 -->
+		<!-- 웹 애플리케이션이 실행되자 마자 생성 -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 		
